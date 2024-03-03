@@ -1,73 +1,87 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
+import Card from "@mui/joy/Card";
+import CardCover from "@mui/joy/CardCover";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import Divider from "@mui/joy/Divider";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from "@mui/joy/Button";
+import IconButton from "@mui/joy/IconButton";
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import PieChartIcon from "@mui/icons-material/PieChart";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 200
+    minWidth: 200,
   },
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 });
 
 const SimpleCard = (data) => {
   const classes = useStyles();
-//   const bull = <span className={classes.bullet}>•</span>;
-  console.log("debug" + JSON.stringify(data))
+  console.log("data: " + JSON.stringify(data));
 
   return (
-        <Card 
-            raised
-            sx={{
-                maxWidth: 280,
-                margin: "0 auto",
-                padding: "0.1em",
-            }}
-            className={classes.root}
+    <Card sx={{ minHeight: "280px", width: 220 }}>
+      <CardCover>
+        <img src={data.image} srcSet={data.image} loading="lazy" alt="" />
+      </CardCover>
+      <CardCover />
+      <CardContent>
+        <IconButton
+          disabled="true"
+          aria-label="bookmark Bahamas Islands"
+          variant="plain"
+          color="neutral"
+          size="sm"
+          sx={{ position: "absolute", top: "0.875rem", right: "0.5rem" }}
         >
-        <CardMedia
-            component="img"
-            height="250"
-            image={data.image}
-            alt="Chevrolet"
-            sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }}
-        />
-        <CardContent>
-            {/* <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-            >
-            Word of the Day
-            </Typography>
-            <Typography variant="h5" component="h2">
-            be{bull}nev{bull}o{bull}lent
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            adjective
-            </Typography> */}
-            <Typography variant="body2" component="p">
-            {data.title}
-            <br />
-            </Typography>
-        </CardContent>
+          {data.icon === "play" && <PlayArrow style={{ color: "white" }} />}
+          {data.icon === "pie" && <PieChartIcon style={{ color: "white" }} />}
+        </IconButton>
+      </CardContent>
+      <CardContent sx={{ justifyContent: "flex-end" }}>
+        <Typography
+          level="title-lg"
+          textColor="#fff"
+          style={{ fontSize: "12px" }}
+        >
+          {data.title}
+        </Typography>
+        <Divider inset="none" />
         <CardActions>
-            <Button size="small">{data.topic}</Button>
+          <Button
+            component="a"
+            variant="solid"
+            color="neutral"
+            size="sm"
+            href={data.link}
+            target="_blank"
+            style={{ fontSize: "10px" }}
+          >
+            {data.topic}
+          </Button>
+          <Typography
+            fontSize="10px"
+            textColor="#fff"
+            textAlign="right"
+            sx={{ position: "absolute", right: "0.5rem" }}
+          >
+            {data.read} min read
+          </Typography>
         </CardActions>
+      </CardContent>
     </Card>
   );
 };
